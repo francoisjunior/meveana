@@ -94,7 +94,7 @@
           <form class="form-inline" action="pedido_item_novo.php" method="post">
             <div class="form-group">
               <label for="idProduto">Produto</label>
-              <select class="form-control" id="idProduto" name="idProduto">
+              <select class="form-control" id="idProduto" name="idProduto" autofocus required>
                 <?php
                   foreach ($conn->query($consulta) as $row) {
                 ?>
