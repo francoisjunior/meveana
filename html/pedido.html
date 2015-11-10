@@ -1,0 +1,102 @@
+      <?php
+        include_once('dbconfig.php');
+
+        $consulta  = 'SELECT a.id, a.data_hora, a.status, (a.valor_itens + a.taxa_entrega) as valor_total, b.nome ';
+        $consulta .= 'FROM pedidos a, clientes b WHERE b.id = a.id_cliente ORDER BY a.id';
+      ?>
+
+      <div class="page-header"><h3>Controle de Pedidos</h3></div>
+      
+      <?php
+        //impressão da mensagem
+        if (isset($_GET['msg'])) {
+          echo imprime_msg($_GET['msg']);
+        }
+      ?>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Legenda</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-sm-3 col-xs-6"><p class="text-center bg-info">Pendente</p></div>
+          <div class="col-sm-3 col-xs-6"><p class="text-center bg-warning">Em trânsito</p></div>
+          <div class="col-sm-3 col-xs-6"><p class="text-center bg-danger">Cancelado</p></div>
+          <div class="col-sm-3 col-xs-6"><p class="text-center bg-success">Entregue</p></div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-success" onClick="window.location.href = './?p=51';">Novo Pedido </button><br><br>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Data/Hora</th>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+            foreach ($conn->query($consulta) as $row) {
+              switch ($row['status']) {
+                case 'Pendente':
+                  $status = 'info';
+                  break;
+                case 'Em trânsito':
+                  $status = 'warning';
+                  break;
+                case 'Cancelado':
+                  $status = 'danger';
+                  break;
+                case 'Entregue':
+                  $status = 'success';
+                  break;
+              }
+          ?>
+          <tr class="<?php echo $status; ?>">
+            <td><?php echo $row['id']; ?></td>
+            <td><?php echo $row['data_hora']; ?></td>
+            <td><?php echo $row['nome']; ?></td>
+            <td><?php echo str_replace('.', ',', $row['valor_total']) ?></td>
+            <td>
+              <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href = './?p=54&id=<?php echo $row['id']; ?>';">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal" onClick="$('#textoAlterar').html('<?php echo $row['nome']; ?>'); $('#codigoAlterar').val('<?php echo $row['id']; ?>');">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+          <?php
+            }
+          ?>
+        </tbody>
+      </table>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Excluir Empresa</h4>
+            </div>
+            <div class="modal-body">
+              <p>Deseja realmente excluir esta empresa?</p>
+              <p id="textoAlterar"></p>
+            </div>
+            <div class="modal-footer">
+              <form action="empresa.php" method="post">
+                <input type="hidden" id="codigoAlterar" name="id" value="">
+                <input type="hidden" name="op" value="3">
+                <button type="submit" class="btn btn-primary">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+

@@ -1,0 +1,66 @@
+<?php
+  //inicializar variáveis
+  $id         = 0;
+  $nome       = '';
+  $telefone   = '';
+  $endereco   = '';
+  $referencia = '';
+  $nascimento = '';
+
+  if ($operacao == 1) {
+    $nomeOp = 'Novo';
+  } elseif ($operacao == 2) {
+    $nomeOp = 'Editar';
+    $id = intval($_GET['id']);
+    include_once('dbconfig.php');
+    $consulta = 'SELECT * FROM clientes WHERE id = :id';
+    $stmt = $conn->prepare($consulta);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $res = $stmt->fetch();
+
+    if ($res) {
+      $nome       = $res['nome'];
+      $telefone   = $res['telefone'];
+      $endereco   = $res['endereco'];
+      $referencia = $res['referencia'];
+      //verifica a necessidade de converter o formato da data
+      if(detecta_os() == "Android" || detecta_navegador() == "Chrome") {
+        $nascimento = $res['nascimento'];
+      } else {
+        $nascimento = data_mysql_br($res['nascimento']);
+      }
+    }
+  }
+?>
+
+      <div class="page-header"><h3><?php echo $nomeOp; ?> Cliente</h3></div>
+
+      <form action="cliente.php" method="post">
+        <div class="form-group">
+          <label for="nomeCliente" class="control-label">Nome</label>
+          <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" maxlength="60" placeholder="Fulano de Tal" value="<?php echo $nome; ?>" autofocus required>
+        </div>
+        <div class="form-group">
+          <label for="telefoneCliente" class="control-label">Telefone</label>
+          <input type="tel" class="form-control" id="telefoneCliente" name="telefoneCliente"  maxlength="10" pattern="([0-9]{1})?[0-9]{4}[-]?[0-9]{4}" title="00000-0000" placeholder="00000-0000" value="<?php echo $telefone; ?>" required>
+        </div>
+        <div class="form-group">
+          <label for="enderecoCliente" class="control-label">Endereço</label>
+          <input type="text" class="form-control" id="enderecoCliente" name="enderecoCliente"  maxlength="150" placeholder="Rua Nova, 123" value="<?php echo $endereco; ?>" required>
+        </div>
+        <div class="form-group">
+          <label for="pontoRefCliente" class="control-label">Ponto de Referência</label>
+          <input type="text" class="form-control" id="pontoRefCliente" name="pontoRefCliente"  maxlength="50" placeholder="Próximo / Em frente à..." value="<?php echo $referencia; ?>">
+        </div>
+        <div class="form-group">
+          <label for="dataNascCliente" class="control-label">Data de Nascimento</label>
+          <input type="date" class="form-control" id="dataNascCliente" name="dataNascCliente"  maxlength="10" placeholder="00/00/0000" value="<?php echo $nascimento; ?>">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-danger" onClick="window.location.href = './?p=1';">Cancelar</button>
+        </div>
+        <input type="hidden" name="op" value="<?php echo $operacao; ?>">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
+      </form>

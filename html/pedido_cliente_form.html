@@ -1,0 +1,41 @@
+<?php
+  //iniciar a sessão
+  session_start();
+
+  if (isset($_SESSION['telefoneCliente'])) {
+    $telefone = $_SESSION['telefoneCliente'];
+  } else {
+    session_destroy();
+    header('Location: ' . $url . '?p=5');
+  }
+
+?>
+
+      <div class="page-header"><h3>Novo Pedido</h3><h4>Cadastro do Cliente</h4></div>
+
+      <form action="pedido_cliente_novo.php" method="post">
+        <div class="form-group">
+          <label for="nomeCliente" class="control-label">Nome</label>
+          <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" maxlength="60" placeholder="Fulano de Tal" autofocus required>
+        </div>
+        <div class="form-group">
+          <label for="telefoneCliente" class="control-label">Telefone</label>
+          <input type="tel" class="form-control" id="telefoneCliente" name="telefoneCliente"  maxlength="10" pattern="([0-9]{1})?[0-9]{4}[-]?[0-9]{4}" title="00000-0000" placeholder="00000-0000" value="<?php echo $telefone; ?>" required>
+        </div>
+        <div class="form-group">
+          <label for="enderecoCliente" class="control-label">Endereço</label>
+          <input type="text" class="form-control" id="enderecoCliente" name="enderecoCliente"  maxlength="150" placeholder="Rua Nova, 123"  required>
+        </div>
+        <div class="form-group">
+          <label for="pontoRefCliente" class="control-label">Ponto de Referência</label>
+          <input type="text" class="form-control" id="pontoRefCliente" name="pontoRefCliente"  maxlength="50" placeholder="Próximo / Em frente à..." >
+        </div>
+        <div class="form-group">
+          <label for="dataNascCliente" class="control-label">Data de Nascimento</label>
+          <input type="date" class="form-control" id="dataNascCliente" name="dataNascCliente"  maxlength="10" placeholder="00/00/0000">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-danger" onClick="window.location.href = './cancela_pedido.php';">Cancelar</button>
+        </div>
+      </form>
