@@ -69,7 +69,7 @@
           <div class="row">
             <div class="col-sm-4"><p><strong>Código do Pedido:</strong> <?php echo $idPedido; ?></p></div>
             <div class="col-sm-4"><p><strong>Data/Hora:</strong> <?php echo $dataPedido; ?></p></div>
-            <div class="col-sm-4"><p><strong>Status:</strong> <?php echo $statusPedido; ?></p></div>
+            <div class="col-sm-4"><p class="bg-<?php echo cor_status($statusPedido); ?>"><strong>Status:</strong> <?php echo $statusPedido; ?></p></div>
           </div>
           <div class="row">
             <div class="col-sm-4"><p><strong>Código do Entregador:</strong> <?php echo $idEntregador; ?></p></div>

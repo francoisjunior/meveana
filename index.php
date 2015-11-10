@@ -37,7 +37,7 @@
 			$menu   = $val1;
 			$pagina = $val1;
 		}
-		if ($val2 >= 1 && $val2 <= 4) {
+		if ($val2 >= 1 && $val2 <= 5) {
 			$operacao = $val2;
 			$pagina  .= $val2;
 		}
@@ -99,6 +99,9 @@
 			break;
 		case 54:
 			include('html/pedido_visualizar.html');
+			break;
+		case 55:
+			include('html/pedido_atualizar.html');
 			break;
 	}
 	

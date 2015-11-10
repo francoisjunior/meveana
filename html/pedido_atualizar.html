@@ -1,0 +1,126 @@
+      <?php
+        
+        //verificar se foi passado o id do pedido corretamente
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+
+          include_once('dbconfig.php');
+          include_once('funcoes.php');
+
+          //query para consultar os dados do pedido
+          $consulta  = 'SELECT a.id, a.id_cliente, a.data_hora, a.status, a.valor_itens, a.taxa_entrega, b.nome as nome_cliente ';
+          $consulta .= 'FROM pedidos a, clientes b ';
+          $consulta .= 'WHERE b.id = a.id_cliente and a.id = :id ';
+
+          //consulta para pegar os entregadores
+          $consulta2  = 'SELECT a.id, a.id_empresa, a.nome, b.nome as nome_empresa ';
+          $consulta2 .= 'FROM entregadores a, empresas b ';
+          $consulta2 .= 'WHERE b.id = a.id_empresa ';
+          $consulta2 .= 'ORDER BY a.nome';
+       
+          //executar consulta
+          $stmt = $conn->prepare($consulta);
+          $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+          $stmt->execute();
+          $res = $stmt->fetch();
+
+          //verifica se a consulta retornou algo
+          if ($res) {
+            
+            //armazenar e tratar o resultado
+            $idPedido        = $res['id'];
+            $dataPedido      = date_format(date_create($res['data_hora']),"d/m/Y H:i:s");
+            $statusPedido    = $res['status'];
+            $valorPedido     = $res['valor_itens'] + $res['taxa_entrega'];
+            $idCliente       = $res['id_cliente'];
+            $nomeCliente     = $res['nome_cliente'];
+
+          } else {
+            header('Location: ./?p=5');
+          }
+
+        } else {
+          header('Location: ./?p=5');
+        }
+        
+      ?>
+
+      <div class="page-header"><h3>Controle de Pedido</h3><h4>Atualizar Status do Pedido</h4></div>
+      
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Dados do Pedido</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-4"><p><strong>Código do Pedido:</strong> <?php echo $idPedido; ?></p></div>
+            <div class="col-sm-4"><p><strong>Data/Hora:</strong> <?php echo $dataPedido; ?></p></div>
+            <div class="col-sm-4"><p class="bg-<?php echo cor_status($statusPedido); ?>"><strong>Status Atual:</strong> <?php echo $statusPedido; ?></p></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4"><p><strong>Código do Cliente:</strong> <?php echo $idCliente; ?></p></div>
+            <div class="col-sm-8"><p><strong>Nome do Cliente:</strong> <?php echo $nomeCliente; ?></p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Novo Status</h3>
+        </div>
+        <div class="panel-body">
+          <form action="pedido_atualizar.php" method="post">            
+            <div class="form-group">
+              <label for="status" class="control-label">Status do Pedido</label>
+              <select class="form-control" id="status" name="statusPedido">
+                <?php
+                  if ($statusPedido == 'Pendente') {
+                ?>
+                <option value="Em trânsito">Em trânsito</option>
+                <option value="Cancelado">Cancelado</option>
+                <?php
+                  } elseif ($statusPedido == 'Em trânsito') {
+                ?>
+                <option value="Entregue">Entregue</option>
+                <option value="Cancelado">Cancelado</option>
+                <?php
+                  }
+                ?>
+              </select>
+            </div>
+            <?php 
+              if ($statusPedido == 'Pendente') {              
+            ?>
+            <div class="form-group">
+              <label for="idEntregador" class="control-label">Entregador</label>
+              <select class="form-control" id="idEntregador" name="idEntregador">
+                <?php
+                  foreach ($conn->query($consulta2) as $row) {
+                ?>
+                <option value="<?php echo intval($row['id']); ?>"><?php echo $row['id'] . ' - '.  $row['nome'] . ' (' . $row['nome_empresa'] . ')' ; ?></option>
+                <?php
+                  }
+                ?>
+              </select>
+            </div>
+            <?php 
+              } elseif ($statusPedido == 'Em trânsito') {
+            ?>
+            <div class="form-group">
+              <label for="valorPago" class="control-label">Valor Pago</label>
+              <div class="input-group">
+                <div class="input-group-addon">R$</div>
+                <input type="number" class="form-control" id="valorPago" name="valorPago" min="<?php echo $valorPedido; ?>" step="0.01" placeholder="10,90" value="<?php echo $valorPedido; ?>" required>
+              </div>
+            </div>
+            <?php
+              }
+            ?>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" class="btn btn-danger" onClick="window.location.href = './?p=5';">Cancelar</button>
+            </div>
+            <input type="hidden" name="id" value="<?php echo intval($idPedido); ?>">
+          </form>
+        </div>
+      </div>

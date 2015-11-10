@@ -69,4 +69,23 @@
 	function formata_tel ($telefone) {
 		return substr($telefone, 0, strlen($telefone)-4) . '-' . substr($telefone, -4);
 	}
+
+	function cor_status ($status) {
+		$retorno = 'primary';
+		switch ($status) {
+			case 'Pendente':
+				$retorno = 'info';
+				break;
+			case 'Em trânsito':
+				$retorno = 'warning';
+				break;
+			case 'Cancelado':
+				$retorno = 'danger';
+				break;
+			case 'Entregue':
+				$retorno = 'success';
+				break;
+		}
+		return $retorno;
+	}
 ?>
