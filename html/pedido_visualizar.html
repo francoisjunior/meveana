@@ -108,37 +108,39 @@
           <h3 class="panel-title">Itens do Pedido</h3>
         </div>
         <div class="panel-body">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Tamanho</th>
-                <th>Qtde</th>
-                <th>Preço Uni</th>
-                <th>Preço Total</th>
-              </tr>
-            </thead>          
-            <tbody>
-              <?php
-                $item = 0;
-                foreach ($resItens as $produto) {
-                  $item++;
-                  $totalProduto = $produto['preco'] * $produto['qtde'];
-              ?>
-              <tr>
-                <td><?php echo $item; ?></td>
-                <td><?php echo $produto['nome']; ?></td>
-                <td><?php echo $produto['tamanho']; ?></td>
-                <td><?php echo $produto['qtde']; ?></td>
-                <td>R$ <?php echo number_format($produto['preco'], 2, ',', ''); ?></td>
-                <td>R$ <?php echo number_format($totalProduto, 2, ',', ''); ?></td>
-              </tr>
-              <?php
-                }
-              ?>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Tamanho</th>
+                  <th>Qtde</th>
+                  <th>Preço Uni</th>
+                  <th>Preço Total</th>
+                </tr>
+              </thead>          
+              <tbody>
+                <?php
+                  $item = 0;
+                  foreach ($resItens as $produto) {
+                    $item++;
+                    $totalProduto = $produto['preco'] * $produto['qtde'];
+                ?>
+                <tr>
+                  <td><?php echo $item; ?></td>
+                  <td><?php echo $produto['nome']; ?></td>
+                  <td><?php echo $produto['tamanho']; ?></td>
+                  <td><?php echo $produto['qtde']; ?></td>
+                  <td>R$ <?php echo number_format($produto['preco'], 2, ',', ''); ?></td>
+                  <td>R$ <?php echo number_format($totalProduto, 2, ',', ''); ?></td>
+                </tr>
+                <?php
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 

@@ -41,49 +41,51 @@
         <div class="panel-heading">
           <h3 class="panel-title">Itens do Pedido</h3>
         </div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nome</th>
-              <th>Qtde</th>
-              <th>Preço Uni</th>
-              <th>Preço Total</th>
-              <th>Remover</th>
-            </tr>
-          </thead>          
-          <tbody>
-            <?php
-              $item = 0;
-              foreach ($_SESSION['itens'] as $produto) {
-                $item++;
-                $totalProduto = $produto['precoProduto'] * $produto['qtdeProduto'];
-                $valorPedido += $totalProduto;
-            ?>
-            <tr>
-              <td><?php echo $item; ?></td>
-              <td><?php echo $produto['nomeProduto']; ?></td>
-              <td><?php echo $produto['qtdeProduto']; ?></td>
-              <td><?php echo number_format($produto['precoProduto'], 2, ',', ''); ?></td>
-              <td><?php echo number_format($totalProduto, 2, ',', ''); ?></td>
-              <td>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onClick="$('#textoAlterar').html('<?php echo $produto['nomeProduto']; ?>'); $('#codigoAlterar').val('<?php echo $item; ?>');">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
-              </td>
-            </tr>
-            <?php
-              }
-            ?>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan='4' class='text-right'>VALOR DO PEDIDO</td>
-              <td><?php echo number_format($valorPedido, 2, ',', ''); ?></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Qtde</th>
+                <th>Preço Uni</th>
+                <th>Preço Total</th>
+                <th>Remover</th>
+              </tr>
+            </thead>          
+            <tbody>
+              <?php
+                $item = 0;
+                foreach ($_SESSION['itens'] as $produto) {
+                  $item++;
+                  $totalProduto = $produto['precoProduto'] * $produto['qtdeProduto'];
+                  $valorPedido += $totalProduto;
+              ?>
+              <tr>
+                <td><?php echo $item; ?></td>
+                <td><?php echo $produto['nomeProduto']; ?></td>
+                <td><?php echo $produto['qtdeProduto']; ?></td>
+                <td><?php echo number_format($produto['precoProduto'], 2, ',', ''); ?></td>
+                <td><?php echo number_format($totalProduto, 2, ',', ''); ?></td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onClick="$('#textoAlterar').html('<?php echo $produto['nomeProduto']; ?>'); $('#codigoAlterar').val('<?php echo $item; ?>');">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>
+                </td>
+              </tr>
+              <?php
+                }
+              ?>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan='4' class='text-right'>VALOR DO PEDIDO</td>
+                <td><?php echo number_format($valorPedido, 2, ',', ''); ?></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
 
       <div class="panel panel-default">

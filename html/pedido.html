@@ -28,44 +28,46 @@
 
       <button type="button" class="btn btn-success" onClick="window.location.href = './?p=51';">Novo Pedido </button><br><br>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Data/Hora</th>
-            <th>Cliente</th>
-            <th>Valor</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-            foreach ($conn->query($consulta) as $row) {
-              $status = cor_status($row['status']);            
-          ?>
-          <tr class="<?php echo $status; ?>">
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo date_format(date_create($row['data_hora']),"d/m/Y H:i:s"); ?></td>
-            <td><?php echo $row['nome']; ?></td>
-            <td><?php echo str_replace('.', ',', $row['valor_total']) ?></td>
-            <td>
-              <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href = './?p=54&id=<?php echo $row['id']; ?>';">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-              </button>
-              <?php
-                if ($row['status'] == "Em trânsito" || $row['status'] == "Pendente") {
-              ?>
-              <button type="button" class="btn btn-warning btn-sm" onClick="window.location.href = './?p=55&id=<?php echo $row['id']; ?>';">
-                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-              </button>
-              <?php
-                }
-              ?>
-            </td>
-          </tr>
-          <?php
-            }
-          ?>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Data/Hora</th>
+              <th>Cliente</th>
+              <th>Valor</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              foreach ($conn->query($consulta) as $row) {
+                $status = cor_status($row['status']);            
+            ?>
+            <tr class="<?php echo $status; ?>">
+              <td><?php echo $row['id']; ?></td>
+              <td><?php echo date_format(date_create($row['data_hora']),"d/m/Y H:i:s"); ?></td>
+              <td><?php echo $row['nome']; ?></td>
+              <td><?php echo str_replace('.', ',', $row['valor_total']) ?></td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href = './?p=54&id=<?php echo $row['id']; ?>';">
+                  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                </button>
+                <?php
+                  if ($row['status'] == "Em trânsito" || $row['status'] == "Pendente") {
+                ?>
+                <button type="button" class="btn btn-warning btn-sm" onClick="window.location.href = './?p=55&id=<?php echo $row['id']; ?>';">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </button>
+                <?php
+                  }
+                ?>
+              </td>
+            </tr>
+            <?php
+              }
+            ?>
+          </tbody>
+        </table>
+      </div>
 
