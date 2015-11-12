@@ -9,7 +9,8 @@
 						   'e3' => 'Erro ao deletar o registro.',
 						   'e4' => 'Operação inválida.',
 						   'e5' => 'Código inválido.',
-						   'e6' => 'Erro ao cadastrar o cliente.');
+						   'e6' => 'Erro ao cadastrar o cliente.',
+						   'e7' => 'Erro ao cadastrar o pedido: adicione pelo menos um item.');
 
 		$retorno = '';
 		$classe  = '';

@@ -6,6 +6,12 @@
 	$valorPedido = 0;
 	$idPedido    = 0;
 
+	//verifica se existem itens no pedido
+	if (count($_SESSION['itens']) < 1) {
+		header('Location: ./?p=53&msg=e7');
+		exit;
+	}
+
 	//varrer a sessão para calcular o valor total do pedido
 	foreach ($_SESSION['itens'] as $row) {
 		$valorPedido += $row['precoProduto'] * $row['qtdeProduto'];

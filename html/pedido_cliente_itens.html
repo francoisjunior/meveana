@@ -21,6 +21,13 @@
       ?>
       <div class="page-header"><h3>Novo Pedido</h3><h4>Itens do Pedido</h4></div>
 
+      <?php
+        //impressão da mensagem
+        if (isset($_GET['msg'])) {
+          echo imprime_msg($_GET['msg']);
+        }
+      ?>
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Dados do Cliente</h3>
