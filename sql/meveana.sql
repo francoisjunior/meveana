@@ -40,15 +40,15 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nome`, `telefone`, `endereco`, `referencia`, `nascimento`) VALUES
-(00002, 'FranÃ§ois JÃºnior', '91890377', 'Rua JoÃ£o GregÃ³rio, 1204, Bairro Novo', 'PrÃ³ximo Ã  igreja N. Sra. de FÃ¡tima', '1984-10-25'),
-(00004, 'Jacksilene Miguel de Souza Ferreira', '991890376', 'Rua JoÃ£o GregÃ³rio, 1204, Bairro Novo', 'PrÃ³ximo Ã  igreja N. Sra. de FÃ¡tima', '1988-08-24'),
-(00005, 'Henrique de Souza Ferreira', '96668032', 'Rua JoÃ£o GregÃ³rio, 1204, Bairro Novo', '', '2015-05-25'),
-(00010, 'Helena Santos', '991890377', 'Rua Ulisses Estanislau de Lucena, 517, Bairro Novo', 'PrÃ³ximo ao abrigo dos velhos', '1970-12-01'),
+(00002, 'FranÃ§ois JÃºnior', '99998888', 'Rua JoÃ£o GregÃ³rio, s/n, Bairro Novo', 'PrÃ³ximo Ã  igreja N. Sra. de FÃ¡tima', '1984-10-25'),
+(00004, 'Jacksilene Miguel de Souza Ferreira', '99997777', 'Rua JoÃ£o GregÃ³rio, s/n, Bairro Novo', 'PrÃ³ximo Ã  igreja N. Sra. de FÃ¡tima', '1988-08-24'),
+(00005, 'Henrique de Souza Ferreira', '88889999', 'Rua JoÃ£o GregÃ³rio, s/n, Bairro Novo', '', '2015-05-25'),
+(00010, 'Helena Santos', '88887777', 'Rua Ulisses Estanislau de Lucena, s/n, Bairro Novo', 'PrÃ³ximo ao abrigo dos velhos', '1970-12-01'),
 (00011, 'Alison de Andrade', '987453645', '', '', '1981-08-06'),
-(00014, 'Adriano Silva', '32711583', 'Rua JoÃ£o GregÃ³rio, 1204, Bairro Novo', 'Lagoa', '1998-02-15'),
-(00015, 'Marcio Felipe', '996668032', 'Rua Ulisses Estanislau de Lucena, 517, Bairro Novo', 'Lagoa', '1978-03-15'),
-(00016, 'JosÃ© FranÃ§ois Alves Ferreira', '32713057', 'Rua Ulisses Estanislau de Lucena, 517, Bairro Novo', '', '1968-03-27'),
-(00017, 'Joseano Dias', '988162722', 'teste', 'teste', '1984-05-15');
+(00014, 'Adriano Silva', '32719999', 'Rua JoÃ£o GregÃ³rio, s/n, Bairro Novo', 'Lagoa', '1998-02-15'),
+(00015, 'Marcio Felipe', '96669666', 'Rua Ulisses Estanislau de Lucena, s/n, Bairro Novo', 'Lagoa', '1978-03-15'),
+(00016, 'JosÃ© FranÃ§ois Alves Ferreira', '32718888', 'Rua Ulisses Estanislau de Lucena, s/n, Bairro Novo', '', '1968-03-27'),
+(00017, 'Joseano Dias', '988166666', 'teste', 'teste', '1984-05-15');
 
 -- --------------------------------------------------------
 
@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `entregadores` (
 
 INSERT INTO `entregadores` (`id`, `id_empresa`, `nome`, `cpf`, `rg`, `telefone`) VALUES
 (01, 01, 'Joao Almeida', '12544754101', '32144547784', '991894451'),
-(03, 03, 'Rafael Santos', '05807137418', '2827162', '996668032'),
-(04, 03, 'Rafael Santos', '05807137418', '2827162', '996668032');
+(03, 03, 'Rafael Santos', '01234567891', '28272625', '996669090'),
+(04, 03, 'Rafael Santos', '01234567891', '28272625', '996669090');
 
 -- --------------------------------------------------------
 
